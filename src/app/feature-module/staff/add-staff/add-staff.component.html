@@ -1,0 +1,9 @@
+<div class="px-3">
+  <nz-breadcrumb nzSeparator=">" class="py-3">
+    <nz-breadcrumb-item class="text-primary fw-bold" role="button" [routerLink]="['/admin/staff']">Staff Management
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item class="text-primary fw-bold">Add New Staff</nz-breadcrumb-item>
+  </nz-breadcrumb>
+  <h4>Add New Staff</h4>
+  <app-staff-form [edit]="false" [readonly]="false"></app-staff-form>
+</div>

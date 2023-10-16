@@ -1,0 +1,68 @@
+<ng-container *ngIf="role">
+  <nz-layout class="private-layout">
+    <nz-sider id="sidebar">
+      <div class="wrapper">
+        <div class="logo">
+          <h2 [routerLink]="['/admin']">Le Castella</h2>
+        </div>
+        <div class="btn-expand d-flex justify-content-center">
+          <button class="btn-collapse" (click)="toggleCollapsed()">
+            <span nz-icon [nzType]="isCollapsed ? 'left' : 'right'"></span>
+          </button>
+        </div>
+        <ul class="wrapper-menu" nz-menu nzMode="inline" nzTheme="dark">
+          <li class="menu-item effect p-0"
+              nz-menu-item
+              nz-tooltip
+              nzTooltipPlacement="right"
+              [routerLink]="['/admin/product']"
+              nzSelected
+              [nzMatchRouter]="true"
+          >
+          <span nz-icon>
+            <i class="fa-solid fa-burger"></i>
+          </span>
+            <span class="item-title m-0 fw-bold">PRODUCT MANAGEMENT</span>
+          </li>
+          <li class="menu-item effect p-0" nz-menu-item [nzMatchRouter]="true" [routerLink]="['/admin/order']">
+          <span nz-icon>
+            <i class="fa-solid fa-money-bill-trend-up"></i>
+          </span>
+            <span class="item-title m-0 fw-bold">ORDER MANAGEMENT</span>
+          </li>
+          <li class="menu-item effect p-0" nz-menu-item [nzMatchRouter]="true" [routerLink]="['/admin/income']">
+          <span nz-icon>
+            <i class="fa-solid fa-chart-pie"></i>
+          </span>
+            <span class="item-title m-0 fw-bold">INCOME MANAGEMENT</span>
+          </li>
+          <li class="menu-item effect p-0" nz-menu-item [nzMatchRouter]="true" [routerLink]="['/admin/profile']">
+          <span nz-icon>
+            <i class="fa-solid fa-user-group"></i>
+          </span>
+            <span class="item-title m-0 fw-bold">PROFILE</span>
+          </li>
+          <li class="menu-item effect p-0" *ngIf="role == 'ADMIN'" nz-menu-item [nzMatchRouter]="true"
+              [routerLink]="['/admin/staff']">
+          <span nz-icon>
+            <i class="fa-solid fa-user-plus"></i>
+          </span>
+            <span class="item-title m-0 fw-bold">STAFF MANAGEMENT</span>
+          </li>
+        </ul>
+      </div>
+    </nz-sider>
+
+    <nz-content id="content">
+      <nz-header>
+        <app-header></app-header>
+      </nz-header>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+      <nz-footer>
+        <app-footer></app-footer>
+      </nz-footer>
+    </nz-content>
+  </nz-layout>
+</ng-container>

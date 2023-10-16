@@ -1,0 +1,27 @@
+@import "../../../styles";
+
+.header-content {
+  background-color: $bg-admin;
+  padding: 10px;
+  //border-bottom: 1px solid blue;
+  width: 100%;
+}
+
+.logo {
+  margin-left: 2rem;
+}
+
+.footer-content {
+  background-color: $bg-dark-gray;
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+}
+
+.empty-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+  align-items: center;
+}

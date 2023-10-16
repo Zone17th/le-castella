@@ -1,0 +1,160 @@
+<div class="px-3 pb-4">
+  <nz-breadcrumb nzSeparator=">" class="py-3">
+    <nz-breadcrumb-item class="text-primary fw-bold" role="button" [routerLink]="['/admin/product']">Product Management
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item class="text-primary fw-bold">Product List</nz-breadcrumb-item>
+  </nz-breadcrumb>
+  <h4 *ngIf="!isEdit">Add New Product</h4>
+  <h4 *ngIf="isEdit">Edit Product</h4>
+  <form nz-form class="w-100 mb-5 mt-4" [formGroup]="dataForm">
+    <table class="w-100">
+      <tr>
+        <th class="w-25">Product Name <span class="text-danger">*</span> :</th>
+        <th nzWidth="10%">Size S :</th>
+        <th nzWidth="10%">Size M :</th>
+        <th nzWidth="10%">Size L :</th>
+        <th nzWidth="10%">Size XL :</th>
+        <th class="text-center" nzWidth="10%">Action :</th>
+      </tr>
+      <tbody>
+      <tr>
+        <td>
+          <nz-form-control [nzSpan]="18" nzErrorTip="Please input product name">
+            <input type="text" nz-input formControlName="name" placeholder="Enter Product Name Here..."/>
+          </nz-form-control>
+        </td>
+        <td>
+          <nz-form-control [nzSpan]="16" nzErrorTip="Please input price of size S">
+            <nz-input-number formControlName="sizeS"
+                             class="w-100"
+                             [nzPlaceHolder]="'Enter Price Here...'"
+                             [nzMin]="10000"
+                             [nzStep]="1000"
+            >
+            </nz-input-number>
+          </nz-form-control>
+        </td>
+        <td>
+          <nz-form-control [nzSpan]="16" nzErrorTip="Please input price of size M">
+            <nz-input-number formControlName="sizeM"
+                             class="w-100"
+                             [nzPlaceHolder]="'Enter Price Here...'"
+                             [nzMin]="10000"
+                             [nzStep]="1000"
+            >
+            </nz-input-number>
+          </nz-form-control>
+        </td>
+        <td>
+          <nz-form-control [nzSpan]="16" nzErrorTip="Please input price of size L">
+            <nz-input-number formControlName="sizeL"
+                             class="w-100"
+                             [nzPlaceHolder]="'Enter Price Here...'"
+                             [nzMin]="10000"
+                             [nzStep]="1000"
+            >
+            </nz-input-number>
+          </nz-form-control>
+        </td>
+        <td>
+          <nz-form-control [nzSpan]="16" nzErrorTip="Please input price of size XL">
+            <nz-input-number formControlName="sizeXL"
+                             class="w-100"
+                             [nzPlaceHolder]="'Enter Price Here...'"
+                             [nzMin]="10000"
+                             [nzStep]="1000"
+            >
+            </nz-input-number>
+          </nz-form-control>
+        </td>
+        <td class="d-flex action-td align-items-center">
+          <button nz-button nzType="primary" (click)="submit()">Save</button>
+          <button nz-button (click)="cancel()">Cancel</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </form>
+  <div class="d-flex align-items-center justify-content-between gap-1 h-10 mb-5">
+    <h4>Product List</h4>
+    <div class="d-flex flex-column w-25 gap-2">
+      <div class="d-flex align-items-center ">
+        <nz-input-group class="rounded-3 p-2 bg-light" [nzSuffix]="suffixIconSearch">
+          <input class="bg-light" type="text" nz-input placeholder="Enter the name to search"
+                 [(ngModel)]="searchOptions" (keydown.enter)="search()"/>
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search" role="button" (click)="search()"></i>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <nz-table class="w-100" #productTable [nzData]="productList" [nzFrontPagination]="false">
+    <thead>
+    <tr>
+      <th nzWidth="10%"></th>
+      <th nzWidth="20%">Product</th>
+      <th class="text-center" nzWidth="15%">Size S</th>
+      <th class="text-center" nzWidth="15%">Size M</th>
+      <th class="text-center" nzWidth="15%">Size L</th>
+      <th class="text-center" nzWidth="15%">Size XL</th>
+      <th class="text-center" nzWidth="10%">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of productTable.data">
+      <td><img src="{{LoadImage.loadImg(data.imgPath)}}" alt="prod_img"></td>
+      <td>{{data.name}}</td>
+      <td class="text-center">{{data?.subProducts[0]?.price | currency:'VND'}}</td>
+      <td class="text-center">{{data?.subProducts[1]?.price | currency:'VND'}}</td>
+      <td class="text-center">{{data?.subProducts[2]?.price | currency:'VND'}}</td>
+      <td class="text-center">{{data?.subProducts[3]?.price | currency:'VND'}}</td>
+      <td style="font-size:25px">
+        <div class="action-table">
+          <span role="button" nz-icon nzType="shopping-cart" nzTheme="outline" (click)="showModal(data)"></span>
+          <span role="button" nz-icon nzType="edit" nzTheme="outline" (click)="editProduct(data.id)"></span>
+          <span role="button" nz-icon nzType="delete" nzTheme="outline" (click)="showDeleteConfirm(data.id)"></span>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+  <nz-modal [(nzVisible)]="productModalShow" nzTitle="Choose Product" nzCancelText="Other Products" nzOkText="OK"
+            (nzOnCancel)="cancelModal()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+      <div class="d-flex align-items-center gap-3">
+        <img class="img-modal" src="{{LoadImage.loadImg(dataModal.imgPath)}}" alt="prod_img">
+        <h4>{{dataModal.name}}</h4>
+      </div>
+      <nz-table #productModal [nzData]="dataModal.subProducts" [nzFrontPagination]="false">
+        <thead>
+        <tr>
+          <th nzWidth="30%">Size</th>
+          <th class="text-center" nzWidth="30%">Unit Price</th>
+          <th nzWidth="40%"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let sub of productModal.data">
+          <ng-container *ngIf="sub.price">
+            <td>Size {{sub.size}}</td>
+            <td class="text-center">{{sub.price | currency:'VND'}}</td>
+            <td class="d-flex align-items-center justify-content-end gap-3">
+              <ng-container *ngIf="getListSubId().includes(sub.id)">
+                <span nz-icon nzType="minus-square" nzTheme="outline" role="button" class="text-danger fs-5"
+                      (click)="minusFromCart(sub.id)"></span>
+                <span [attr.data-id]="sub.id">{{displayQuantity(sub.id)}}</span>
+              </ng-container>
+              <span nz-icon nzType="plus-square" nzTheme="outline" role="button" class="text-danger fs-5"
+                    (click)="addToCart(sub.id)"></span>
+            </td>
+          </ng-container>
+        </tr>
+        </tbody>
+      </nz-table>
+    </ng-container>
+  </nz-modal>
+  <nz-pagination *ngIf="dataLoaded" (nzPageIndexChange)="paging($event)"
+                 [nzPageIndex]="page + 1" [nzPageSize]="size" [nzTotal]="totalElements"></nz-pagination>
+</div>
+

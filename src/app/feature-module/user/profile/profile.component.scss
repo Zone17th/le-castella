@@ -1,0 +1,6 @@
+@import "../../../../styles";
+.disabled-input {
+  background-color: $bg-gray;
+  color: $bg-gray-active;
+  cursor: not-allowed;
+}

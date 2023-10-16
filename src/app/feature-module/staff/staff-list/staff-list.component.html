@@ -1,0 +1,57 @@
+<div class="px-3 pb-4">
+  <nz-breadcrumb nzSeparator=">" class="py-3">
+    <nz-breadcrumb-item class="text-primary fw-bold" role="button" [routerLink]="['/admin/staff']">Staff Management
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item class="text-primary fw-bold">Staff List</nz-breadcrumb-item>
+  </nz-breadcrumb>
+  <div class="d-flex align-items-center justify-content-between gap-1 h-10">
+    <h4>Staff List</h4>
+    <div class="d-flex flex-column w-25 gap-2">
+      <div class="d-flex align-items-center ">
+        <nz-input-group class="rounded-3 p-2 bg-light" [nzSuffix]="suffixIconSearch">
+          <input class="bg-light" type="text" nz-input placeholder="input search text"
+                 [(ngModel)]="searchOptions" (keydown.enter)="search()"/>
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search" role="button" (click)="search()"></i>
+        </ng-template>
+      </div>
+      <div class="d-flex justify-content-end w-5 mt-2 mb-3">
+        <button nz-button [nzType]="'primary'" [routerLink]="['/admin/staff/create']"
+                class="rounded-3 d-flex align-items-center justify-content-center p-4">
+          <span>Add new staff</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <nz-table class="table-custom" #fixedTable [nzData]="staffList" [nzFrontPagination]="false">
+    <thead>
+    <tr>
+      <th nzWidth="20%">Username</th>
+      <th nzWidth="20%">Full Name</th>
+      <th nzWidth="20%">Created Date</th>
+      <th nzWidth="20%">Store</th>
+      <th class="text-center" nzWidth="10%">Role</th>
+      <th class="text-center" nzWidth="10%">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of fixedTable.data">
+      <td class="fw-bolder" role="button" [routerLink]="['/admin/staff', data.id]">{{data.username}}</td>
+      <td class="fw-bold">{{ data.fullName}}</td>
+      <td>{{ data.createdDate | date:"dd/MM/yyyy hh:mm a"}}</td>
+      <td>{{'Store: ' + data.store?.name }}</td>
+      <td class="text-center">{{ data.role }}</td>
+      <td class="d-flex align-items-center justify-content-center gap-3" style="font-size:25px">
+        <p role="button" class="text-dark"><span nz-icon nzType="edit" [routerLink]="['/admin/staff/edit', data.id]"
+                                        nzTheme="outline"></span></p>
+        <p role="button" nz-popconfirm nzCancelText="Cancel" nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="delete(data.id)">
+          <span nz-icon nzType="delete" nzTheme="outline"></span>
+        </p>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+  <nz-pagination *ngIf="dataLoaded" (nzPageIndexChange)="paging($event)"
+                 [nzPageIndex]="page + 1" [nzPageSize]="size" [nzTotal]="totalElements"></nz-pagination>
+</div>

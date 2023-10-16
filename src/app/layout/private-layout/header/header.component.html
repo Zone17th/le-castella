@@ -1,0 +1,17 @@
+<div class="content">
+  <i [attr.data-count]="totalItems || 0" class="fa-solid fa-cart-shopping fs-4 cart-btn" role="button" (click)="generateModal()"></i>
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Shopping Cart" nzWidth="1000px" nzCancelText="Continue Shopping" nzOkText="Go to Checkout"
+            (nzOnCancel)="cancelModal()" (nzOnOk)="handleOk()" nzOkDisabled="{{totalItems < 1}}">
+    <ng-container *nzModalContent>
+      <app-cart-data [cartModalData]="cartModalData"></app-cart-data>
+    </ng-container>
+  </nz-modal>
+  <div class="avatar">
+    <span class="fw-bold">{{userName}}</span>
+  </div>
+  <button class="d-flex align-items-center header-content" (click)="showConfirm()" style="padding: 0">
+    <i class="fa-solid fa-arrow-right-from-bracket fs-5"></i>
+    <span nz-button class="header-btn">Log out</span>
+  </button>
+</div>
+

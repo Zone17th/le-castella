@@ -1,0 +1,47 @@
+@import "../../../../styles";
+.header-content {
+  column-gap: 5px;
+  border: none;
+  background-color: $bg-admin;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.header-btn {
+  cursor: pointer;
+  font-weight: 600;
+  color: $primary-color-subtle;
+}
+
+.header-btn:hover {
+  opacity: 0.6;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #fdffa5;
+  color: #848680;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cart-btn {
+  position: relative;
+}
+.cart-btn:after {
+  content: attr(data-count);
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  padding: 5px;
+  border-radius: 20px;
+  font-size: 10px;
+  color: $light-color;
+  background-color: $error-color;
+}

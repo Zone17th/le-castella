@@ -1,0 +1,142 @@
+@import "../../../styles";
+.private-layout {
+  min-height: 100vh;
+}
+
+// sider
+nz-sider {
+  background: $bg-admin;
+
+  .wrapper {
+    width: 200px;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+
+    .logo,
+    .btn-expand {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+
+      .btn-collapse {
+        display: none;
+      }
+    }
+
+    .wrapper-menu {
+      height: 100%;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .menu-item {
+        border-bottom: 1px $info-bg-color solid;
+        min-height: 100px;
+        color: $dark-color;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-left: 16px;
+      }
+    }
+  }
+}
+
+// content
+nz-content {
+  background: $light-color;
+  color: $dark-color;
+  min-height: 100vh;
+  line-height: 120px;
+  display: flex;
+  flex-direction: column;
+
+  nz-header {
+    background: $bg-admin;
+    color: $dark-color;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .content {
+    min-height: 630px;
+    overflow-x: auto;
+    flex: 1;
+  }
+
+  nz-footer {
+    background: $bg-dark-gray;
+    color: $light-color;
+    line-height: 1.5;
+  }
+}
+
+// effect
+.effect {
+  &:hover {
+    background: $light-color;
+    color: $text-hover !important;
+  }
+}
+
+.expand {
+  max-width: 200px !important;
+  min-width: 200px !important;
+
+  .wrapper {
+    width: 200px;
+
+    .item-title {
+      display: block !important;
+    }
+  }
+}
+
+// responsive
+@media only screen and (max-width: 768px) {
+  nz-sider {
+    max-width: 50px !important;
+    min-width: 50px !important;
+    .wrapper {
+      width: 50px;
+
+      .logo {
+        display: none;
+      }
+
+      .btn-expand {
+        margin-bottom: 50px;
+        .btn-collapse {
+          border-radius: 5px;
+          width: 25px;
+          height: 25px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: none;
+          background: $text-hover;
+          font-size: 1rem;
+          color: $light-color;
+          position: absolute;
+          right: 0;
+          //box-shadow:
+          //  rgba(0, 0, 0, 0.25) 0 54px 55px,
+          //  rgba(0, 0, 0, 0.12) 0px -12px 30px,
+          //  rgba(0, 0, 0, 0.12) 0px 4px 6px,
+          //  rgba(0, 0, 0, 0.17) 0px 12px 13px,
+          //  rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        }
+      }
+
+      .menu-item {
+        display: flex;
+        padding: 0 !important;
+        .item-title {
+          display: none;
+        }
+      }
+    }
+  }
+}

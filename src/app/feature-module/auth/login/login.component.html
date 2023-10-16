@@ -1,0 +1,46 @@
+<div class="body">
+  <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <h3 class="login-title">Login into your account</h3>
+      <b class="login-error" *ngIf="errorMessage">{{errorMessage}}</b>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <nz-form-label [nzSpan]="6" nzFor="email" class="login-label">Username</nz-form-label>
+        <nz-input-group nzPrefixIcon="user">
+          <input type="text" nz-input formControlName="username" placeholder="Enter your username"/>
+        </nz-input-group>
+        <ng-container *ngIf="inputUsernameTouched">
+          <div class="login-error" *ngIf="username?.errors?.['required']">
+            Username is required !
+          </div>
+        </ng-container>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <nz-form-label [nzSpan]="6" nzFor="password" class="login-label">Password</nz-form-label>
+        <nz-input-group nzPrefixIcon="lock" [nzSuffix]="suffixTemplateConfirm">
+          <input
+            [type]="passwordVisibleConfirm ? 'text' : 'password'"
+            id="confirm"
+            nz-input
+            formControlName="password"
+            placeholder="Enter your password..."
+          />
+        </nz-input-group>
+        <ng-template #suffixTemplateConfirm>
+            <span
+              nz-icon
+              [nzType]="passwordVisibleConfirm ? 'eye-invisible' : 'eye'"
+              (click)="passwordVisibleConfirm = !passwordVisibleConfirm"></span>
+        </ng-template>
+        <div class="login-error" *ngIf="inputPasswordTouched && password?.errors?.['required']">Password is required !
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row class="login-form-margin">
+    </div>
+    <button nz-button class="login-form-button" [nzType]="'primary'">Login</button>
+  </form>
+</div>

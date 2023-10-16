@@ -1,0 +1,14 @@
+@import "../../../styles";
+.action-td {
+  justify-content: space-around;
+}
+.action-table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+td > img, .img-modal {
+  max-width: 100px;
+  max-height: 100px;
+}

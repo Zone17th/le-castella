@@ -1,0 +1,35 @@
+@import "../../../../styles";
+.body {
+  flex-grow: 1;
+}
+.login-form {
+  max-width: 500px;
+  margin: 100px auto;
+  border-radius: 10px;
+  background-color: $bg-login;
+  padding: 70px;
+}
+
+.login-form-margin {
+  margin-bottom: 16px;
+  justify-content: end;
+}
+
+.login-form-forgot {
+  float: right;
+  text-decoration: underline;
+}
+
+.login-form-button {
+  width: 100%;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.login-label{
+  float: left;
+  margin-bottom: 5px;
+}
+.login-error{
+  color: $error-color;
+  float: left;
+}

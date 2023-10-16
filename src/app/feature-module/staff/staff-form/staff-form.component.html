@@ -1,0 +1,86 @@
+<div class="p-5">
+  <form nz-form [formGroup]="staffForm">
+    <!--  username  -->
+    <nz-form-item>
+      <nz-form-label [nzSpan]="3" nzFor="username">Username<span class="text-danger ps-1">*</span></nz-form-label>
+      <nz-form-control [nzSpan]="10" nzErrorTip="Please input username">
+        <input [readonly]="edit" [ngClass]="{'disabled-input': edit}" type="text" nz-input
+               formControlName="username"
+               placeholder="Enter Username Here..."/>
+      </nz-form-control>
+    </nz-form-item>
+    <!--    full name -->
+    <nz-form-item>
+      <nz-form-label [nzSpan]="3" nzFor="fullName">Full Name<span class="text-danger ps-1">*</span></nz-form-label>
+      <nz-form-control [nzSpan]="10" nzErrorTip="Please input full name">
+        <input [readOnly]="readonly" [ngClass]="{'disabled-input': readonly}" type="text" nz-input
+               formControlName="fullName"
+               placeholder="Please input full name"/>
+      </nz-form-control>
+    </nz-form-item>
+    <!--  Password -->
+    <nz-form-item>
+      <nz-form-label [nzSpan]="3" nzFor="website">Password<span class="text-danger ps-1">*</span></nz-form-label>
+      <nz-form-control [nzSpan]="10" nzErrorTip="Enter Password Here...">
+        <nz-input-group [nzSuffix]="suffixTemplateConfirm">
+          <input
+            [readOnly]="readonly"
+            [type]="passwordVisible ? 'text' : 'password'"
+            id="confirm"
+            nz-input
+            placeholder="Please input password"
+            formControlName="password"  #password
+          />
+        </nz-input-group>
+        <ng-template #suffixTemplateConfirm>
+            <span
+              role="button"
+              nz-icon
+              [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+              (click)="passwordVisible = !passwordVisible"></span>
+        </ng-template>
+        <div *ngIf="passwordRequired">
+          <span class="text-danger">Passwords is required.</span>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+    <!--  Store List-->
+    <nz-form-item>
+      <nz-form-label [nzSpan]="3" nzFor="childReceivingAge">Store<span class="text-danger ps-1">*</span>
+      </nz-form-label>
+      <nz-form-control [nzSpan]="10" nzErrorTip="please select a store">
+        <nz-select [nzDisabled]="readonly"
+                   [nzPlaceHolder]="'Select a Store'"
+                   nzShowSearch nzAllowClear formControlName="store">
+          <nz-option *ngFor="let store of storeList" [nzLabel]="'Store: ' + store?.name " [nzValue]="store?.id"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzLg]="3" [nzMd]="2" [nzSm]="0">
+      </nz-form-control>
+      <nz-form-control [nzLg]="10" [nzMd]="20" [nzSm]="24">
+
+        <button nz-button *ngIf="(!readonly)" (click)="resetForm()">Cancel</button>
+
+        <button nz-button *ngIf="(readonly)"
+                (click)="showDeleteConfirm()" nzType="primary" nzDanger>Delete
+        </button>
+
+        <button nz-button *ngIf="(readonly)" nzType="primary"
+                [routerLink]="['/admin/staff/edit', staffData?.id]">Edit
+        </button>
+
+        <button nz-button *ngIf="!readonly && !edit"
+                (click)="submitForm('create')" nzType="primary">Create
+        </button>
+        <button nz-button *ngIf="!readonly && edit"
+                (click)="submitForm('update')" nzType="primary">Update
+        </button>
+
+      </nz-form-control>
+      <!--   nút button của các màn hình  -->
+    </nz-form-item>
+  </form>
+</div>
+

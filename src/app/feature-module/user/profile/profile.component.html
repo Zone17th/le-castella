@@ -1,0 +1,122 @@
+<ng-container *ngIf="username">
+  <div class="px-3 pb-4">
+    <nz-breadcrumb nzSeparator=">" class="text-start py-3">
+      <nz-breadcrumb-item class="text-primary fw-bold" role="button" [routerLink]="['/admin/profile']">Profile
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item class="text-primary fw-bold">Edit Profile</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <h4>My Profile</h4>
+
+    <form nz-form class="mt-5" [formGroup]="profileForm">
+      <!-- user name -->
+      <nz-form-item>
+        <nz-form-label class="d-flex justify-content-start" [nzSpan]="3" nzFor="username">Username</nz-form-label>
+        <nz-form-control [nzSpan]="8" nzErrorTip="Username is required!">
+          <input class="border border-secondary disabled-input" readonly nz-input type="text" id="username"
+                 placeholder="Enter username..." formControlName="username"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label class="d-flex justify-content-start" [nzSpan]="3" nzFor="fullName">Full Name<span
+          class="text-danger">&nbsp;*</span></nz-form-label>
+        <nz-form-control [nzSpan]="8" nzErrorTip="Full name is required!">
+          <input class="border border-secondary" nz-input type="text" id="fullName" placeholder="Enter full name..."
+                 formControlName="fullName"/>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item nz-row class="register-area">
+        <nz-form-control [nzSpan]="12" [nzOffset]="3">
+          <button class="rounded fw-bold me-3" nz-button nzType="primary" (click)="submitProfileForm()">Update</button>
+          <button class="rounded fw-bold me-3" nz-button (click)="reset()">Cancel</button>
+          <button *ngIf="!isChangePassword" class="rounded fw-bold me-3" nz-button nzType="primary"
+                  (click)="chooseChange()" nzGhost>Change Password
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+
+    <form *ngIf="isChangePassword" nz-form class="mt-5" [formGroup]="passwordForm">
+      <nz-form-item>
+        <nz-form-label class="d-flex justify-content-start" [nzSpan]="3" nzFor="oldPass">Old Password<span
+          class="text-danger">&nbsp;*</span></nz-form-label>
+        <nz-form-control [nzSpan]="8" nzErrorTip="Old Password is required!">
+          <nz-input-group [nzSuffix]="suffixTemplateOld" class="border border-secondary">
+            <input
+              [type]="passwordVisibleOld ? 'text' : 'password'"
+              id="oldPass"
+              nz-input
+              placeholder="Enter old password..."
+              formControlName="oldPassword"
+            />
+          </nz-input-group>
+          <ng-template #suffixTemplateOld>
+            <span
+              nz-icon
+              [nzType]="passwordVisibleOld ? 'eye-invisible' : 'eye'"
+              (click)="passwordVisibleOld = !passwordVisibleOld"></span>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label class="d-flex justify-content-start" [nzSpan]="3" nzFor="newPass">New Password<span
+          class="text-danger">&nbsp;*</span></nz-form-label>
+        <nz-form-control [nzSpan]="8" nzErrorTip="New password is required!">
+          <nz-input-group [nzSuffix]="suffixTemplateNew" class="border border-secondary">
+            <input
+              [type]="passwordVisibleNew ? 'text' : 'password'"
+              id="newPass"
+              nz-input
+              placeholder="Enter new password..."
+              formControlName="newPassword" #newPasswordField
+            />
+          </nz-input-group>
+          <ng-template #suffixTemplateNew>
+            <span
+              nz-icon
+              [nzType]="passwordVisibleNew ? 'eye-invisible' : 'eye'"
+              (click)="passwordVisibleNew = !passwordVisibleNew"></span>
+          </ng-template>
+<!--          <input class="border border-secondary" nz-input type="password" id="newPass"-->
+<!--                 placeholder="Enter new password..." formControlName="newPassword" #newPasswordField/>-->
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label class="d-flex justify-content-start" [nzSpan]="3" nzFor="confirm">Confirm New Password<span
+          class="text-danger">&nbsp;*</span></nz-form-label>
+        <nz-form-control [nzSpan]="8" nzErrorTip="Confirm new password is required!">
+          <nz-input-group [nzSuffix]="suffixTemplateConfirm" class="border border-secondary">
+            <input
+              [type]="passwordVisibleConfirm ? 'text' : 'password'"
+              id="confirm"
+              nz-input
+              placeholder="Enter confirm password..."
+              formControlName="confirmPassword" (blur)="validatePasswordMatch()" #confirmPasswordField
+            />
+          </nz-input-group>
+          <ng-template #suffixTemplateConfirm>
+            <span
+              nz-icon
+              [nzType]="passwordVisibleConfirm ? 'eye-invisible' : 'eye'"
+              (click)="passwordVisibleConfirm = !passwordVisibleConfirm"></span>
+          </ng-template>
+<!--          <input class="border border-secondary" nz-input type="password" id="confirm"-->
+<!--                 placeholder="Enter confirm new password..." formControlName="confirmPassword"-->
+<!--                 (blur)="validatePasswordMatch()" #confirmPasswordField/>-->
+          <div *ngIf="mismatchPassword">
+            <span class="text-danger">Passwords do not match.</span>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item nz-row class="register-area">
+        <nz-form-control [nzSpan]="12" [nzOffset]="3">
+          <button class="rounded fw-bold me-3" nz-button nzType="primary" (click)="submitPasswordForm()" nzGhost>
+            Confirm
+          </button>
+          <button class="rounded fw-bold me-3" nz-button (click)="cancelChange()">Cancel</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</ng-container>

@@ -1,0 +1,36 @@
+nz-select {
+  max-width: 100%;
+  margin-bottom: 0.25rem;
+}
+nz-form-control nz-select{
+  margin-bottom: 0.5rem;
+}
+nz-form-item{
+  margin-bottom: 1rem;
+}
+nz-breadcrumb, h4{
+  display: flex;
+  align-items: flex-start;
+  margin: 2rem 0;
+}
+nz-form-label{
+  text-align: start;
+  font-weight: bold;
+}
+button{
+  margin-right: 1rem;
+  margin-bottom: 5px;
+}
+.ant-checkbox-wrapper.ant-checkbox-wrapper-in-form-item {
+  margin-bottom: 1rem;
+}
+.disabled-input {
+  background-color: #f2f2f2;
+  color: #999;
+  cursor: not-allowed;
+
+}
+.disabled-input[readonly]:hover {
+  outline: none;
+}
+

@@ -1,0 +1,48 @@
+<ng-container *ngIf="cartModalData && cartModalData.length">
+  <nz-table #cartModal [nzData]="cartModalData" [nzFrontPagination]="false">
+    <thead>
+    <tr>
+      <th nzWidth="15%"></th>
+      <th nzWidth="25%">Product</th>
+      <th class="text-center" nzWidth="10%">Size</th>
+      <th class="text-center" nzWidth="10%">Unit price</th>
+      <th class="text-center" nzWidth="25%">Quantity</th>
+      <th class="text-center" nzWidth="15%">Remove</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let item of cartModal.data">
+      <tr *ngIf="item.subProducts?.length" class="tr-product">
+        <td><img class="img-modal" src="{{LoadImage.loadImg(item.imgPath)}}" alt="prod_img"></td>
+        <td class="fw-bold">{{item.name}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <ng-container *ngFor="let sub of item.subProducts">
+        <tr *ngIf="displayQuantity(sub.id)">
+          <td></td>
+          <td></td>
+          <td class="text-center">Size {{sub.size}}</td>
+          <td class="text-center">{{sub.price | currency: 'VND'}}</td>
+          <td class="d-flex align-items-center justify-content-center gap-3">
+          <span nz-icon nzType="minus-square" nzTheme="outline" role="button" class="text-danger fs-5"
+                (click)="minusFromCart(sub.id)"></span>
+            <span>{{displayQuantity(sub.id)}}</span>
+            <span nz-icon nzType="plus-square" nzTheme="outline" role="button" class="text-danger fs-5"
+                  (click)="addToCart(sub.id)"></span>
+          </td>
+          <td class="text-center">
+            <span nz-icon nzType="delete" nzTheme="outline" role="button" class="text-danger fs-5"
+                  (click)="removeFromCart(sub.id)"></span>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+    </tbody>
+  </nz-table>
+</ng-container>
+<ng-container *ngIf="!cartModalData || !cartModalData.length">
+  <nz-empty></nz-empty>
+</ng-container>
